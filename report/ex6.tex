@@ -1,0 +1,81 @@
+%%%%%%%%%%%%%%%% Including packages %%%%%%%%%%%%%%%%%
+\documentclass[english,12pt]{article}
+\usepackage{amsmath,epsfig}
+\usepackage[latin1]{inputenc}
+\usepackage{calc, epsfig, rotating, amsmath}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\usepackage{textcomp} 
+\usepackage{epstopdf}
+\usepackage{makeidx}
+\usepackage{sidecap}
+\usepackage{amssymb}
+\usepackage{blkarray}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{ae} %does also load the fontenc package with T1 option
+\usepackage{babel}
+\usepackage{ifthen,tikz,xkeyval}
+\usepackage{todonotes}
+\usepackage{fancyhdr, rotating}
+\usepackage{cite}
+\usepackage{subfigure}
+\usepackage{setspace}
+\usepackage{xcolor}
+\usepackage[intoc]{nomencl}
+\usepackage{braket}
+\usepackage{appendix}
+\usepackage{lscape}
+\usepackage[section]{placeins}
+
+%%%%%%%%%%%%%%%%% Title page %%%%%%%%%%%%%%%%%%%%%%%%%
+\title{\textbf{TMA4280 - Exercise 6}}
+\author{Rolf H. Myhre and Eirik Hjertenæs}
+\date{04.04.14}
+
+
+%%%%%%%%%%%%%%%%% Paragraph settings %%%%%%%%%%%%%%%%%
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1ex plus 0.5 ex minus 0.2ex}
+
+%%%%%%%%%%%%%%%% Beginning document %%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\bibliographystyle{jcp}
+
+%%%%%%%%%%%%%%%% Redefining commands %%%%%%%%%%%%%%%%%
+\renewcommand{\thesubsection}{\alph{subsection}}
+\newcommand{\ra}{\ensuremath \rightarrow}
+
+\makeatletter
+\renewcommand{\subsection}{\@startsection{subsection}{1}{0mm}{0.5\baselineskip}{0.5 \baselineskip}{\normalfont\normalsize\textbf}}
+\renewcommand{\theenumi}{\roman{enumi}}
+\renewcommand{\labelenumi}{\theenumi)}
+\makeatother
+
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%% Main part %%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%% Teaching goals %%%%%%%%%%%%%%%%%%%%%%%
+\vspace{1.5cm}
+\setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{0}
+\setcounter{secnumdepth}{2}
+
+\begin{center}
+\section*{Summary}
+\end{center}
+
+\newpage
+
+\section{Introduction}
+
+\section{Results}
+
+\section{Discussion and Conclusions}
+
+\bibliography{master}
+
+\end{document}
