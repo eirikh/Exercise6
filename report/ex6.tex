@@ -30,7 +30,7 @@
 
 %%%%%%%%%%%%%%%%% Title page %%%%%%%%%%%%%%%%%%%%%%%%%
 \title{\textbf{TMA4280 - Exercise 6}}
-\author{Rolf H. Myhre and Eirik HjertenÃ¦s}
+\author{Rolf H. Myhre and Eirik Hjertenæs}
 \date{04.04.14}
 
 
@@ -53,9 +53,9 @@
 \renewcommand{\labelenumi}{\theenumi)}
 \makeatother
 
+\begin{titlepage}
 
-\maketitle
-
+	\clearpage\maketitle\thispagestyle{empty}
 %%%%%%%%%%%%%%%%%%%%%% Main part %%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%% Teaching goals %%%%%%%%%%%%%%%%%%%%%%%
@@ -66,15 +66,35 @@
 
 \begin{center}
 \section*{Summary}
+In this report, a parallell implementation of a Discrete Sine Transform solver of the two-dimensional Poisson problem is presented. The implementation is a hybrid between MPI and OpenMP suited for a distributed memory system with multi-threading per MPI-process. The developed code is evaluated with respect to accuracy and efficiency. The hybrid version of the program is also compared to a purely MPI code.
 \end{center}
 
+\end{titlepage}
 \newpage
 
 \section{Introduction}
+In this exercise we have studied the two dimensional Poisson problem on a unit square. The problem can be formulated as follows:
+	\begin{align}
+	-\nabla^2 u = f & \quad \text{in} \quad \Omega = (0,1)\times(0,1)\\
+	u = 0 &\quad \text{on} \quad \partial  \Omega
+	\end{align}
+
+where $u$ is the solution to the problem and $f$ is a known function. The last equation gives the boundary conditions. We discretize the problem and solve it on a mesh with identical, uniform spacing in both directions. The Laplace operator is discretized using a 5-point stencil. The problem can then be rewritten as a set of coupled linear equations, represented by:
+\begin{equation}
+\bar{A} \bar{x} = \bar{b}
+\end{equation}
+
+In two dimensions, the 5-point stencil results in a pentadiagonal matrix with a bandwith $n$, the number of points along one direction in the mesh. The matrix $\bar{A}$ is still positive definite and symmetric so we know that the problem is solvable and that the solution is unique. The problem can be solved in a number of ways, using different types of iterative or direct methods. Here we 
 
 \section{Results}
 
+
 \section{Discussion and Conclusions}
+
+\subsection{Accuracy}
+
+\subsection{Speed-up and efficiency}
+
 
 \bibliography{master}
 
