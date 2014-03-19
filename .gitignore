@@ -1,0 +1,10 @@
+*.pdf
+*.log
+*.aux
+*.blg
+*.bbl
+*.swp
+*/Makefile
+*/CMakeFiles/
+*/CMakeCache.txt
+*/cmake_install.cmake
