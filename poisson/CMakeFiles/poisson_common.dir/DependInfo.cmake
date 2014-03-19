@@ -4,8 +4,8 @@ SET(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_Fortran
-  "/home/rolf/Documents/Exercise6/poisson/fst.f" "/home/rolf/Documents/Exercise6/poisson/CMakeFiles/poisson_common.dir/fst.f.o"
-  "/home/rolf/Documents/Exercise6/poisson/pcommon.f90" "/home/rolf/Documents/Exercise6/poisson/CMakeFiles/poisson_common.dir/pcommon.f90.o"
+  "/home/hjertena/Documents/TMA4280/Exercise6/poisson/fst.f" "/home/hjertena/Documents/TMA4280/Exercise6/poisson/CMakeFiles/poisson_common.dir/fst.f.o"
+  "/home/hjertena/Documents/TMA4280/Exercise6/poisson/pcommon.f90" "/home/hjertena/Documents/TMA4280/Exercise6/poisson/CMakeFiles/poisson_common.dir/pcommon.f90.o"
   )
 SET(CMAKE_Fortran_COMPILER_ID "GNU")
 

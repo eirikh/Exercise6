@@ -33,6 +33,7 @@ program poisson
    call second(t1)
 
    call mpistuff(rank,mpi_size,ierror)
+
    rankp1 = rank + 1
 
    allocate (m_per_p(mpi_size),stat=astatus)
@@ -74,7 +75,7 @@ program poisson
    enddo 
 
 !  transpose function must be rewritten
-   call transp (b, bt, m, m_per_p(rankp1)i,mpi_size)
+   call transp (bt, b, m, m_per_p,mpi_size,rank,ierror)
 
 !  transform back
    do i=1,m_per_p(rankp1)
@@ -94,7 +95,7 @@ program poisson
    enddo 
 
 !  transpose again
-   call transp (b, bt, m, m_per_p)
+   call transp (b, bt, m, m_per_p,mpi_size,rank,ierror)
 
 !  last back transform
    do j=1,m_per_p(rankp1)

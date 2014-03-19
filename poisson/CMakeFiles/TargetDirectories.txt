@@ -1,2 +1,2 @@
-/home/rolf/Documents/Exercise6/poisson/CMakeFiles/poisson.dir
-/home/rolf/Documents/Exercise6/poisson/CMakeFiles/poisson_common.dir
+/home/hjertena/Documents/TMA4280/Exercise6/poisson/CMakeFiles/poisson.dir
+/home/hjertena/Documents/TMA4280/Exercise6/poisson/CMakeFiles/poisson_common.dir

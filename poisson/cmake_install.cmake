@@ -1,4 +1,4 @@
-# Install script for directory: /home/rolf/Documents/Exercise6/poisson
+# Install script for directory: /home/hjertena/Documents/TMA4280/Exercise6/poisson
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -38,7 +38,7 @@ ELSE(CMAKE_INSTALL_COMPONENT)
   SET(CMAKE_INSTALL_MANIFEST "install_manifest.txt")
 ENDIF(CMAKE_INSTALL_COMPONENT)
 
-FILE(WRITE "/home/rolf/Documents/Exercise6/poisson/${CMAKE_INSTALL_MANIFEST}" "")
+FILE(WRITE "/home/hjertena/Documents/TMA4280/Exercise6/poisson/${CMAKE_INSTALL_MANIFEST}" "")
 FOREACH(file ${CMAKE_INSTALL_MANIFEST_FILES})
-  FILE(APPEND "/home/rolf/Documents/Exercise6/poisson/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
+  FILE(APPEND "/home/hjertena/Documents/TMA4280/Exercise6/poisson/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
 ENDFOREACH(file)

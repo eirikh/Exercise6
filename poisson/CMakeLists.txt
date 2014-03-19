@@ -3,14 +3,8 @@ cmake_minimum_required(VERSION 2.6)
 
 enable_language(Fortran)
 
-option(ENABLE_OPENMP "Enable OpenMP support?" OFF)
-option(ENABLE_MPI    "Enable MPI support?" OFF)
-
-
-set(CPP)
-if(NOT "${CPP}" STREQUAL "")
-   add_definitions(${CPP})
-endif()
+option(ENABLE_OPENMP "Enable OpenMP support?" ON)
+option(ENABLE_MPI    "Enable MPI support?" ON)
 
 
 include_directories(${COMMON_INCLUDE_PATHS})

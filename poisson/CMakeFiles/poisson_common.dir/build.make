@@ -35,10 +35,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/rolf/Documents/Exercise6/poisson
+CMAKE_SOURCE_DIR = /home/hjertena/Documents/TMA4280/Exercise6/poisson
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/rolf/Documents/Exercise6/poisson
+CMAKE_BINARY_DIR = /home/hjertena/Documents/TMA4280/Exercise6/poisson
 
 # Include any dependencies generated for this target.
 include CMakeFiles/poisson_common.dir/depend.make
@@ -51,9 +51,9 @@ include CMakeFiles/poisson_common.dir/flags.make
 
 CMakeFiles/poisson_common.dir/fst.f.o: CMakeFiles/poisson_common.dir/flags.make
 CMakeFiles/poisson_common.dir/fst.f.o: fst.f
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/rolf/Documents/Exercise6/poisson/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/hjertena/Documents/TMA4280/Exercise6/poisson/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building Fortran object CMakeFiles/poisson_common.dir/fst.f.o"
-	/usr/bin/gfortran  $(Fortran_DEFINES) $(Fortran_FLAGS) -c /home/rolf/Documents/Exercise6/poisson/fst.f -o CMakeFiles/poisson_common.dir/fst.f.o
+	/usr/bin/gfortran  $(Fortran_DEFINES) $(Fortran_FLAGS) -c /home/hjertena/Documents/TMA4280/Exercise6/poisson/fst.f -o CMakeFiles/poisson_common.dir/fst.f.o
 
 CMakeFiles/poisson_common.dir/fst.f.o.requires:
 .PHONY : CMakeFiles/poisson_common.dir/fst.f.o.requires
@@ -66,9 +66,9 @@ CMakeFiles/poisson_common.dir/fst.f.o.provides.build: CMakeFiles/poisson_common.
 
 CMakeFiles/poisson_common.dir/pcommon.f90.o: CMakeFiles/poisson_common.dir/flags.make
 CMakeFiles/poisson_common.dir/pcommon.f90.o: pcommon.f90
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/rolf/Documents/Exercise6/poisson/CMakeFiles $(CMAKE_PROGRESS_2)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/hjertena/Documents/TMA4280/Exercise6/poisson/CMakeFiles $(CMAKE_PROGRESS_2)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building Fortran object CMakeFiles/poisson_common.dir/pcommon.f90.o"
-	/usr/bin/gfortran  $(Fortran_DEFINES) $(Fortran_FLAGS) -c /home/rolf/Documents/Exercise6/poisson/pcommon.f90 -o CMakeFiles/poisson_common.dir/pcommon.f90.o
+	/usr/bin/gfortran  $(Fortran_DEFINES) $(Fortran_FLAGS) -c /home/hjertena/Documents/TMA4280/Exercise6/poisson/pcommon.f90 -o CMakeFiles/poisson_common.dir/pcommon.f90.o
 
 CMakeFiles/poisson_common.dir/pcommon.f90.o.requires:
 .PHONY : CMakeFiles/poisson_common.dir/pcommon.f90.o.requires
@@ -108,6 +108,6 @@ CMakeFiles/poisson_common.dir/clean:
 .PHONY : CMakeFiles/poisson_common.dir/clean
 
 CMakeFiles/poisson_common.dir/depend:
-	cd /home/rolf/Documents/Exercise6/poisson && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/rolf/Documents/Exercise6/poisson /home/rolf/Documents/Exercise6/poisson /home/rolf/Documents/Exercise6/poisson /home/rolf/Documents/Exercise6/poisson /home/rolf/Documents/Exercise6/poisson/CMakeFiles/poisson_common.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/hjertena/Documents/TMA4280/Exercise6/poisson && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/hjertena/Documents/TMA4280/Exercise6/poisson /home/hjertena/Documents/TMA4280/Exercise6/poisson /home/hjertena/Documents/TMA4280/Exercise6/poisson /home/hjertena/Documents/TMA4280/Exercise6/poisson /home/hjertena/Documents/TMA4280/Exercise6/poisson/CMakeFiles/poisson_common.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/poisson_common.dir/depend
 

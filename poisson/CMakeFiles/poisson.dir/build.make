@@ -35,10 +35,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/rolf/Documents/Exercise6/poisson
+CMAKE_SOURCE_DIR = /home/hjertena/Documents/TMA4280/Exercise6/poisson
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/rolf/Documents/Exercise6/poisson
+CMAKE_BINARY_DIR = /home/hjertena/Documents/TMA4280/Exercise6/poisson
 
 # Include any dependencies generated for this target.
 include CMakeFiles/poisson.dir/depend.make
@@ -51,9 +51,9 @@ include CMakeFiles/poisson.dir/flags.make
 
 CMakeFiles/poisson.dir/poisson.f90.o: CMakeFiles/poisson.dir/flags.make
 CMakeFiles/poisson.dir/poisson.f90.o: poisson.f90
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/rolf/Documents/Exercise6/poisson/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/hjertena/Documents/TMA4280/Exercise6/poisson/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building Fortran object CMakeFiles/poisson.dir/poisson.f90.o"
-	/usr/bin/gfortran  $(Fortran_DEFINES) $(Fortran_FLAGS) -c /home/rolf/Documents/Exercise6/poisson/poisson.f90 -o CMakeFiles/poisson.dir/poisson.f90.o
+	/usr/bin/gfortran  $(Fortran_DEFINES) $(Fortran_FLAGS) -c /home/hjertena/Documents/TMA4280/Exercise6/poisson/poisson.f90 -o CMakeFiles/poisson.dir/poisson.f90.o
 
 CMakeFiles/poisson.dir/poisson.f90.o.requires:
 .PHONY : CMakeFiles/poisson.dir/poisson.f90.o.requires
@@ -111,6 +111,6 @@ CMakeFiles/poisson.dir/clean:
 .PHONY : CMakeFiles/poisson.dir/clean
 
 CMakeFiles/poisson.dir/depend:
-	cd /home/rolf/Documents/Exercise6/poisson && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/rolf/Documents/Exercise6/poisson /home/rolf/Documents/Exercise6/poisson /home/rolf/Documents/Exercise6/poisson /home/rolf/Documents/Exercise6/poisson /home/rolf/Documents/Exercise6/poisson/CMakeFiles/poisson.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/hjertena/Documents/TMA4280/Exercise6/poisson && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/hjertena/Documents/TMA4280/Exercise6/poisson /home/hjertena/Documents/TMA4280/Exercise6/poisson /home/hjertena/Documents/TMA4280/Exercise6/poisson /home/hjertena/Documents/TMA4280/Exercise6/poisson /home/hjertena/Documents/TMA4280/Exercise6/poisson/CMakeFiles/poisson.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/poisson.dir/depend
 
