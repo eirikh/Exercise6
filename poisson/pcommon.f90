@@ -41,7 +41,8 @@ subroutine transp(at, a, m, mp, mpi_size, rank, ierror)
    integer(kind=8), intent(in) :: m
    integer(kind=8), intent(in) :: mp(mpi_size)
 #ifdef HAVE_MPI
-   integer :: group(mpi_size), offset(mpi_size), koff, joff
+   integer :: koff, joff
+   integer :: group(mpi_size), offset(mpi_size)
    real(kind=8)   :: a(m*mp(rank+1))
    real(kind=8)   :: at(m*mp(rank+1))
 #else
@@ -54,11 +55,6 @@ subroutine transp(at, a, m, mp, mpi_size, rank, ierror)
    koff = 0
    joff = 0
    offset(1)=0
-   if (rank .eq. 0) then
-      write(*,*) "a in"
-      write(*,"(7F8.5)") a
-      write(*,*)
-   endif
    do i = 1,mpi_size
       group(i) = mp(i)*mp(rank+1)
       if (i .ne. 1) offset(i) = offset(i-1) + group(i-1)
@@ -70,29 +66,17 @@ subroutine transp(at, a, m, mp, mpi_size, rank, ierror)
       enddo
       joff = joff + mp(i)
    enddo
-   if (rank .eq. 0) then
-      write(*,*) "at as sendbuff"
-      write(*,"(14F8.5)") at
-      write(*,*)
-   endif
-!   if (rank .eq. 0) then
-!      write(*,*) "rank", rank
-!      write(*,*) "at as sendbuff"
-!      write(*,"(14F8.5)") a
-!      write(*,*)
-!      write(*,*) "group", group
-!      write(*,*) "offset", offset 
-!      write(*,*) "mp", mp
-!      write(*,*)
-!      write(*,*)
-!   endif
+   call mpi_barrier(world_comm,ierror)
 ! sends at to a
-   call mpi_alltoallv(at,group,offset,mpi_real8,a,group,offset,mpi_real8,world_comm,ierror) 
+   call mpi_alltoallv(at,group,offset,mpi_double_precision,a,group,offset,mpi_double_precision,world_comm,ierror) 
 ! unwraps the received a into at correctly
    koff = 0
-   joff = 0
-! loop over procs
-!   do i = 1,mpi_size
+   if (rank .eq. 0) then
+      write(*,*)
+      write(*,*) "a in"
+      write(*,"(F8.5)") a
+      write(*,*)
+   endif
 ! loop over all the rows
       do j = 1,mp(rank+1)
 ! loop over the columns owned by this proc
@@ -103,11 +87,12 @@ subroutine transp(at, a, m, mp, mpi_size, rank, ierror)
          enddo
          koff = koff + m
       enddo
-      joff = joff + mp(rank+1)
-!   enddo   
-!   if (rank .eq. 0) then
-!      write(*,*) "at after transp"
-!      write(*,"(7F8.5)") at
+!   if (rank .eq. 3) then
+!      write(*,*) "at in"
+!      write(*,"(1F8.5)") at
+!      do i=1,7
+!      write(*,"(2F8.5)") at(i), at(i+7)
+!      enddo
 !      write(*,*)
 !   endif
 #else
