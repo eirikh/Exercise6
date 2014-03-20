@@ -50,21 +50,35 @@ subroutine transp(at, a, m, mp, mpi_size, rank, ierror)
 #endif
 
 #ifdef HAVE_MPI
+!   write(*,*) 'a in start of transp'
+!   do i = 1, mp(rank+1)
+!      write(*,"(7F10.5)") ( a(i+(j-1)*m) , j = 1,m)
+!   enddo
+!  write(*,*)
+!   write(*,*)
 ! Packs a into sendbuf at
-   joff = 0
    koff = 0
+   joff = 0
    offset(1)=0
    do i = 1,mpi_size
       group(i) = mp(i)*mp(rank+1)
       if (i .ne. 1) offset(i) = group(i-1)
       do j = 1, mp(rank+1)
          do k = 1, mp(i)
-            at(k + koff) = a(index(j + joff,k))
+! how to limit the elements in k
+!           write(*,*) "koff+k",koff+k
+!           write(*,*) "joff+(j-1)*m+k",joff+(j-1)*m+k
+            at(koff+k) = a(joff+(j-1)*m+k)
          enddo
-         koff = koff + j*mp(i)
+         koff = koff + mp(i)
       enddo
       joff = joff + mp(i)
    enddo
+!   write(*,*) 'at packed as sendbuf' 
+!   do i = 1, m*mp(rank+1)
+!      write(*,"(7F10.5)")  at(i) 
+!   enddo
+!   write(*,*)
 ! sends at to a
    call mpi_alltoallv(at,group,offset,mpi_real8,a,group,offset,mpi_real8,world_comm,ierror) 
 ! unwraps the received a into at correctly
@@ -72,12 +86,14 @@ subroutine transp(at, a, m, mp, mpi_size, rank, ierror)
 ! loop over procs
    do i = 1,mpi_size
 ! loop over all the rows
-      do j = 1,m 
+      do j = 1,mp(i) 
 ! loop over the columns owned by this proc
-         do k = 1,mp(rank+1)
-           at(index(j,k)) = a(k+koff)
+         do k = 1,m
+            at(koff+k) = a(j+(k-1)*mp(i))
+!           write(*,*) "koff+k",koff+k
+!           write(*,*) "j+(k-1)*mp(i)",j+(k-1)*mp(i)
          enddo
-         koff = koff + mp(rank+1)
+         koff = koff + m
       enddo
    enddo   
 #else
