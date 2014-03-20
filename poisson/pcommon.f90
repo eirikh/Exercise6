@@ -54,9 +54,14 @@ subroutine transp(at, a, m, mp, mpi_size, rank, ierror)
    koff = 0
    joff = 0
    offset(1)=0
+   if (rank .eq. 0) then
+      write(*,*) "a in"
+      write(*,"(7F8.5)") a
+      write(*,*)
+   endif
    do i = 1,mpi_size
       group(i) = mp(i)*mp(rank+1)
-      if (i .ne. 1) offset(i) = group(i-1)
+      if (i .ne. 1) offset(i) = offset(i-1) + group(i-1)
       do j = 1, mp(rank+1)
          do k = 1, mp(i)
             at(koff+k) = a(joff+(j-1)*m+k)
@@ -65,13 +70,24 @@ subroutine transp(at, a, m, mp, mpi_size, rank, ierror)
       enddo
       joff = joff + mp(i)
    enddo
-! sends at to a
-   call mpi_alltoallv(at,group,offset,mpi_real8,a,group,offset,mpi_real8,world_comm,ierror) 
+   if (rank .eq. 0) then
+      write(*,*) "at as sendbuff"
+      write(*,"(14F8.5)") at
+      write(*,*)
+   endif
 !   if (rank .eq. 0) then
-!      write(*,*) "a as recvbuff"
+!      write(*,*) "rank", rank
+!      write(*,*) "at as sendbuff"
 !      write(*,"(14F8.5)") a
 !      write(*,*)
+!      write(*,*) "group", group
+!      write(*,*) "offset", offset 
+!      write(*,*) "mp", mp
+!      write(*,*)
+!      write(*,*)
 !   endif
+! sends at to a
+   call mpi_alltoallv(at,group,offset,mpi_real8,a,group,offset,mpi_real8,world_comm,ierror) 
 ! unwraps the received a into at correctly
    koff = 0
    joff = 0

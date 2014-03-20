@@ -74,20 +74,10 @@ program poisson
       call fst(b(1,j), n, z, nn)
    enddo 
 
-   if (rank .eq. 0) then
-   write(*,*) 'b after first fst'
-   write(*,"(7F8.5)") b
-   write(*,*)
-   endif
 
 !  transpose function must be rewritten
    call transp (bt, b, m, m_per_p,mpi_size,rank,ierror)
 
-   if (rank .eq. 0) then
-   write(*,*) 'bt after first transform'
-   write(*,"(7F8.5)") bt
-   write(*,*)
-   endif
 
 !  transform back
    do i=1,m_per_p(rankp1)
@@ -107,9 +97,19 @@ program poisson
       call fst (bt(1,i), n, z, nn)
    enddo 
 
+!   if (rank .eq. 0) then
+!   write(*,*) 'bt before second transpose'
+!   write(*,"(7F8.5)") bt
+!   write(*,*)
+!   endif
 !  transpose again
    call transp (b, bt, m, m_per_p,mpi_size,rank,ierror)
 
+!   if (rank .eq. 0) then
+!   write(*,*) 'b after second transpose'
+!   write(*,"(7F8.5)") b
+!   write(*,*)
+!   endif
 !  last back transform
    do j=1,m_per_p(rankp1)
       call fstinv (b(1,j), n, z, nn)
@@ -124,8 +124,8 @@ program poisson
       enddo
    enddo
 
-!   write(6,*) ' ' 
-!   write(6,*) umax
+   write(6,*) ' ' 
+   write(6,*) umax
 
    call mpiendstuff(ierror)
    stop
