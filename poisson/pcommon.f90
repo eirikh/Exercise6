@@ -50,12 +50,6 @@ subroutine transp(at, a, m, mp, mpi_size, rank, ierror)
 #endif
 
 #ifdef HAVE_MPI
-!   write(*,*) 'a in start of transp'
-!   do i = 1, mp(rank+1)
-!      write(*,"(7F10.5)") ( a(i+(j-1)*m) , j = 1,m)
-!   enddo
-!  write(*,*)
-!   write(*,*)
 ! Packs a into sendbuf at
    koff = 0
    joff = 0
@@ -65,37 +59,40 @@ subroutine transp(at, a, m, mp, mpi_size, rank, ierror)
       if (i .ne. 1) offset(i) = group(i-1)
       do j = 1, mp(rank+1)
          do k = 1, mp(i)
-! how to limit the elements in k
-!           write(*,*) "koff+k",koff+k
-!           write(*,*) "joff+(j-1)*m+k",joff+(j-1)*m+k
             at(koff+k) = a(joff+(j-1)*m+k)
          enddo
          koff = koff + mp(i)
       enddo
       joff = joff + mp(i)
    enddo
-!   write(*,*) 'at packed as sendbuf' 
-!   do i = 1, m*mp(rank+1)
-!      write(*,"(7F10.5)")  at(i) 
-!   enddo
-!   write(*,*)
 ! sends at to a
    call mpi_alltoallv(at,group,offset,mpi_real8,a,group,offset,mpi_real8,world_comm,ierror) 
+   if (rank .eq. 0) then
+      write(*,*) "a as recvbuff"
+      write(*,"(14F8.5)") at
+      write(*,*)
+   endif
 ! unwraps the received a into at correctly
    koff = 0
 ! loop over procs
    do i = 1,mpi_size
 ! loop over all the rows
-      do j = 1,mp(i) 
+      do j = 1,mp(rank+1) 
 ! loop over the columns owned by this proc
-         do k = 1,m
+         do k = 1,mp(i)
+            if (rank .eq. 0) write(*,*) "koff + k,j+(k-1)*mp(i)",koff +k,j+(k+-1)*mp(i)
+            if (rank .eq. 0) write(*,*)
             at(koff+k) = a(j+(k-1)*mp(i))
-!           write(*,*) "koff+k",koff+k
-!           write(*,*) "j+(k-1)*mp(i)",j+(k-1)*mp(i)
          enddo
-         koff = koff + m
+         if (rank .eq. 0) write(*,*)
+         koff = koff + mp(i)
       enddo
    enddo   
+   if (rank .eq. 0) then
+      write(*,*) "at after transp"
+      write(*,"(7F8.5)") at
+      write(*,*)
+   endif
 #else
    do j=1,m
       do i=1,m

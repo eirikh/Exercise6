@@ -14,7 +14,7 @@ program poisson
 !     ntnu, october 2000
 !
 !===================================================================
-   integer(kind=8), parameter :: n  = 128 
+   integer(kind=8), parameter :: n  = 8 
    integer(kind=8), parameter :: m  = n-1
    integer(kind=8), parameter :: nn = 4*n
 ! b is G=(TU + UT) 
@@ -74,30 +74,26 @@ program poisson
       call fst(b(1,j), n, z, nn)
    enddo 
 
-  write(*,*) 'b after first fst'
-  do i = 1, m_per_p(rankp1)
-     write(*,'(7F10.5)')( b(i,j),j=1,m)
-  enddo
-  write(*,*)
+!   if (rank .eq. 0) then
+!   write(*,*) 'b after first fst'
+!   write(*,"(7F8.5)") b
+!   write(*,*)
+!   endif
 
 !  transpose function must be rewritten
    call transp (bt, b, m, m_per_p,mpi_size,rank,ierror)
 
-  write(*,*) 'bt after first transpose'
-  do i = 1, m_per_p(rankp1)
-     write(*,'(7F10.5)')( bt(i,j),j=1,m)
-  enddo
+!   if (rank .eq. 0) then
+!   write(*,*) 'bt after first transform'
+!   write(*,"(7F8.5)") bt
+!   write(*,*)
+!   endif
 
 !  transform back
    do i=1,m_per_p(rankp1)
       call fstinv(bt(1,i), n, z, nn)
    enddo 
 
-  write(*,*) 'bt after first fstinv'
-  do i = 1, m_per_p(rankp1)
-     write(*,'(7F10.5)')( bt(i,j),j=1,m)
-  enddo
-  write(*,*)
 
 !  Divide by diag elements. All elements available on each node.
    do j=1,m_per_p(rankp1)
@@ -105,39 +101,19 @@ program poisson
          bt(i,j) = bt(i,j)/(diag(i)+diag(j))
       enddo
    enddo
-  write(*,*) 'bt after scaling by diag' 
-  do i = 1, m_per_p(rankp1)
-     write(*,'(7F10.5)')( bt(i,j),j=1,m)
-  enddo
-  write(*,*)
 
 !  transform again
    do i=1,m_per_p(rankp1)
       call fst (bt(1,i), n, z, nn)
    enddo 
-  write(*,*) 'bt after second fst' 
-  do i = 1, m_per_p(rankp1)
-     write(*,'(7F10.5)')( bt(i,j),j=1,m)
-  enddo
-  write(*,*)
 
 !  transpose again
    call transp (b, bt, m, m_per_p,mpi_size,rank,ierror)
-  write(*,*) 'b after transposing back' 
-  do i = 1, m_per_p(rankp1)
-     write(*,'(7F10.5)')( b(i,j),j=1,m)
-  enddo
-  write(*,*)
 
 !  last back transform
    do j=1,m_per_p(rankp1)
       call fstinv (b(1,j), n, z, nn)
    enddo 
-  write(*,*) 'b after last fstinv' 
-  do i = 1, m_per_p(rankp1)
-     write(*,'(7F10.5)')( b(i,j),j=1,m)
-  enddo
-  write(*,*)
 
 !  now, all cpu will print largest u
 !  some I/O required here
@@ -148,8 +124,8 @@ program poisson
       enddo
    enddo
 
-   write(6,*) ' ' 
-   write(6,*) umax
+!   write(6,*) ' ' 
+!   write(6,*) umax
 
    call mpiendstuff(ierror)
    stop

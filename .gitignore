@@ -4,6 +4,8 @@
 *.blg
 *.bbl
 *.swp
+*/poisson
+*/*.a
 */Makefile
 */CMakeFiles/
 */CMakeCache.txt
