@@ -74,20 +74,20 @@ program poisson
       call fst(b(1,j), n, z, nn)
    enddo 
 
-!   if (rank .eq. 0) then
-!   write(*,*) 'b after first fst'
-!   write(*,"(7F8.5)") b
-!   write(*,*)
-!   endif
+   if (rank .eq. 0) then
+   write(*,*) 'b after first fst'
+   write(*,"(7F8.5)") b
+   write(*,*)
+   endif
 
 !  transpose function must be rewritten
    call transp (bt, b, m, m_per_p,mpi_size,rank,ierror)
 
-!   if (rank .eq. 0) then
-!   write(*,*) 'bt after first transform'
-!   write(*,"(7F8.5)") bt
-!   write(*,*)
-!   endif
+   if (rank .eq. 0) then
+   write(*,*) 'bt after first transform'
+   write(*,"(7F8.5)") bt
+   write(*,*)
+   endif
 
 !  transform back
    do i=1,m_per_p(rankp1)

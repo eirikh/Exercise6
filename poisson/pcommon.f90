@@ -67,32 +67,33 @@ subroutine transp(at, a, m, mp, mpi_size, rank, ierror)
    enddo
 ! sends at to a
    call mpi_alltoallv(at,group,offset,mpi_real8,a,group,offset,mpi_real8,world_comm,ierror) 
-   if (rank .eq. 0) then
-      write(*,*) "a as recvbuff"
-      write(*,"(14F8.5)") at
-      write(*,*)
-   endif
+!   if (rank .eq. 0) then
+!      write(*,*) "a as recvbuff"
+!      write(*,"(14F8.5)") a
+!      write(*,*)
+!   endif
 ! unwraps the received a into at correctly
    koff = 0
+   joff = 0
 ! loop over procs
-   do i = 1,mpi_size
+!   do i = 1,mpi_size
 ! loop over all the rows
-      do j = 1,mp(rank+1) 
+      do j = 1,mp(rank+1)
 ! loop over the columns owned by this proc
-         do k = 1,mp(i)
-            if (rank .eq. 0) write(*,*) "koff + k,j+(k-1)*mp(i)",koff +k,j+(k+-1)*mp(i)
-            if (rank .eq. 0) write(*,*)
-            at(koff+k) = a(j+(k-1)*mp(i))
+         do k = 1,m
+!            if (rank .eq. 0) write(*,*) "koff + k,k+(j-1)*mp(rank+1)",koff +k,j + (k-1)*mp(rank+1)
+!            if (rank .eq. 0) write(*,*)
+            at(koff+k) = a(j+(k-1)*mp(rank+1))
          enddo
-         if (rank .eq. 0) write(*,*)
-         koff = koff + mp(i)
+         koff = koff + m
       enddo
-   enddo   
-   if (rank .eq. 0) then
-      write(*,*) "at after transp"
-      write(*,"(7F8.5)") at
-      write(*,*)
-   endif
+      joff = joff + mp(rank+1)
+!   enddo   
+!   if (rank .eq. 0) then
+!      write(*,*) "at after transp"
+!      write(*,"(7F8.5)") at
+!      write(*,*)
+!   endif
 #else
    do j=1,m
       do i=1,m
