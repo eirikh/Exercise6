@@ -14,7 +14,7 @@ program poisson
 !     ntnu, october 2000
 !
 !===================================================================
-   integer(kind=8), parameter :: n  = 128 
+   integer(kind=8), parameter :: n  = 128
    integer(kind=8), parameter :: m  = n-1
    integer(kind=8), parameter :: nn = 4*n
 ! b is G=(TU + UT) 

@@ -118,7 +118,11 @@ integer(kind=8) :: m
 integer(kind=8) :: mp(mpi_size)
 real(kind=8) :: a(m*mp(rank+1))
 #ifdef HAVE_MPI
-integer i,filehand, procsize, offset
+integer i,filehand, procsize,stat(2)
+integer(kind=mpi_offset_kind) offset, totsize
+
+filehand=4
+totsize = m*m
 
 offset = 0
 do i = 1,rank
@@ -128,10 +132,9 @@ enddo
 procsize = mp(rank+1)*m
 call mpi_file_open(world_comm,"matrix_output",mpi_mode_wronly + mpi_mode_create,mpi_info_null,filehand,ierror)
 
-!call mpi_file_set_view(filehand,offset,mpi_double_precision,mpi_double_precision,'external32',mpi_info_null,ierror)
-
-call mpi_file_write_at(filehand,offset*sizeof(a(1)),a,procsize,mpi_double_precision)
-
+call mpi_file_set_size(filehand,totsize,ierror)
+call mpi_file_set_view(filehand,offset,mpi_double_precision,mpi_double_precision,"natve",mpi_info_null,ierror)
+call mpi_file_write(filehand,a,m*mp(rank + 1),mpi_double_precision,stat,ierror)
 call mpi_file_close(filehand,ierror)
 #endif
    return
