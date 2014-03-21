@@ -14,7 +14,7 @@ program poisson
 !     ntnu, october 2000
 !
 !===================================================================
-   integer(kind=8), parameter :: n  = 8 
+   integer(kind=8), parameter :: n  = 128 
    integer(kind=8), parameter :: m  = n-1
    integer(kind=8), parameter :: nn = 4*n
 ! b is G=(TU + UT) 
@@ -26,7 +26,7 @@ program poisson
    real(kind=8)    ::  diag(m)
    real(kind=8)    ::  pi, umax, h
    real(kind=4)    ::  tarray(2), t1, t2, dt
-   integer   ::  i,j
+   integer   ::  i,j,coloff
    integer   ::  ierror,comm,mpi_size,rank,r,mpi_m,rankp1
    integer   ::  astatus
       
@@ -86,9 +86,13 @@ program poisson
 
 
 !  Divide by diag elements. All elements available on each node.
+   coloff = 0
+   do i = 2,rankp1
+      coloff = coloff + m_per_p(i-1)
+   enddo
    do j=1,m_per_p(rankp1)
       do i=1,m
-         bt(i,j) = bt(i,j)/(diag(i)+diag(j))
+         bt(i,j) = bt(i,j)/(diag(i)+diag(j+coloff))
       enddo
    enddo
 
