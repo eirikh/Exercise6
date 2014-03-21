@@ -87,8 +87,8 @@ program poisson
 
 !  Divide by diag elements. All elements available on each node.
    coloff = 0
-   do i = 2,rankp1
-      coloff = coloff + m_per_p(i-1)
+   do i = 1,rank
+      coloff = coloff + m_per_p(i)
    enddo
    do j=1,m_per_p(rankp1)
       do i=1,m
@@ -130,6 +130,8 @@ program poisson
 
    write(6,*) ' ' 
    write(6,*) umax
+   
+   call write_matrix(b,m,m_per_p,mpi_size,rank,ierror)
 
    call mpiendstuff(ierror)
    stop

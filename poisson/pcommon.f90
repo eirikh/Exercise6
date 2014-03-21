@@ -55,19 +55,11 @@ subroutine transp(at, a, m, mp, mpi_size, rank, ierror)
    koff = 0
    joff = 0
    offset(1)=0
-if (rank .eq. 1) then
-   write(*,*) "before packing loop"
-endif
    do i = 1,mpi_size
       group(i) = mp(i)*mp(rank+1)
       if (i .ne. 1) offset(i) = offset(i-1) + group(i-1)
       do j = 1, mp(rank+1)
          do k = 1, mp(i)
-if (rank .eq. 1) then
-         write(*,*) "k", k 
-         write(*,*) "koff", koff
-         write(*,*) "joff+(j-1)*m+k",joff+(j-1)*m+k
-endif
             at(koff+k) = a(joff+(j-1)*m+k)
          enddo
          koff = koff + mp(i)
@@ -84,11 +76,8 @@ endif
 !      write(*,*) "a in"
 !      write(*,"(F8.5)") a
 !      write(*,*)
-<<<<<<< HEAD
  !  endif
-=======
 !   endif
->>>>>>> ded8b8d30341a6b2a705fb6c2e7da2278d08beed
 ! loop over all the rows
       do j = 1,mp(rank+1)
 ! loop over the columns owned by this proc
@@ -114,6 +103,36 @@ endif
       enddo
    enddo
 
+#endif
+   return
+end
+
+
+
+subroutine write_matrix(a,m, mp, mpi_size, rank, ierror)
+   implicit none
+#include "pcommon.h"
+
+integer mpi_size, rank, ierror
+integer(kind=8) :: m
+integer(kind=8) :: mp(mpi_size)
+real(kind=8) :: a(m*mp(rank+1))
+#ifdef HAVE_MPI
+integer i,filehand, procsize, offset
+
+offset = 0
+do i = 1,rank
+   offset = offset + mp(i)*m
+enddo
+
+procsize = mp(rank+1)*m
+call mpi_file_open(world_comm,"matrix_output",mpi_mode_wronly + mpi_mode_create,mpi_info_null,filehand,ierror)
+
+!call mpi_file_set_view(filehand,offset,mpi_double_precision,mpi_double_precision,'external32',mpi_info_null,ierror)
+
+call mpi_file_write_at(filehand,offset*sizeof(a(1)),a,procsize,mpi_double_precision)
+
+call mpi_file_close(filehand,ierror)
 #endif
    return
 end
