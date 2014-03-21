@@ -55,11 +55,19 @@ subroutine transp(at, a, m, mp, mpi_size, rank, ierror)
    koff = 0
    joff = 0
    offset(1)=0
+if (rank .eq. 1) then
+   write(*,*) "before packing loop"
+endif
    do i = 1,mpi_size
       group(i) = mp(i)*mp(rank+1)
       if (i .ne. 1) offset(i) = offset(i-1) + group(i-1)
       do j = 1, mp(rank+1)
          do k = 1, mp(i)
+if (rank .eq. 1) then
+         write(*,*) "k", k 
+         write(*,*) "koff", koff
+         write(*,*) "joff+(j-1)*m+k",joff+(j-1)*m+k
+endif
             at(koff+k) = a(joff+(j-1)*m+k)
          enddo
          koff = koff + mp(i)
@@ -71,12 +79,12 @@ subroutine transp(at, a, m, mp, mpi_size, rank, ierror)
    call mpi_alltoallv(at,group,offset,mpi_double_precision,a,group,offset,mpi_double_precision,world_comm,ierror) 
 ! unwraps the received a into at correctly
    koff = 0
-   if (rank .eq. 0) then
-      write(*,*)
-      write(*,*) "a in"
-      write(*,"(F8.5)") a
-      write(*,*)
-   endif
+!   if (rank .eq. 0) then
+!      write(*,*)
+!      write(*,*) "a in"
+!      write(*,"(F8.5)") a
+!      write(*,*)
+ !  endif
 ! loop over all the rows
       do j = 1,mp(rank+1)
 ! loop over the columns owned by this proc
