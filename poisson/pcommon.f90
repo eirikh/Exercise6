@@ -84,7 +84,11 @@ endif
 !      write(*,*) "a in"
 !      write(*,"(F8.5)") a
 !      write(*,*)
+<<<<<<< HEAD
  !  endif
+=======
+!   endif
+>>>>>>> ded8b8d30341a6b2a705fb6c2e7da2278d08beed
 ! loop over all the rows
       do j = 1,mp(rank+1)
 ! loop over the columns owned by this proc
