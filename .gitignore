@@ -6,6 +6,7 @@
 *.swp
 */poisson
 */*.a
+*/matrix_output
 */Makefile
 */CMakeFiles/
 */CMakeCache.txt

@@ -17,7 +17,7 @@ if(ENABLE_OPENMP)
   find_package(OpenMP)
   if(OPENMP_FOUND)
     list(APPEND COMMON_DEFINITIONS -DHAVE_OPENMP)
-    set(COMMON_Fortran_FLAGS "${COMMON_Fortran_FLAGS} ${OpenMP_Fortran_FLAGS}")
+    set(COMMON_Fortran_FLAGS "${COMMON_Fortran_FLAGS} ${OpenMP_C_FLAGS}")
   endif()
 endif()
 

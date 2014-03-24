@@ -7,3 +7,6 @@ common / pcommon / world_comm
 #endif
 
 
+#ifdef HAVE_OPENMP
+#include "omp_lib.h"
+#endif

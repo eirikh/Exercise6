@@ -14,7 +14,7 @@ program poisson
 !     ntnu, october 2000
 !
 !===================================================================
-   integer(kind=8), parameter :: n  = 128
+   integer(kind=8), parameter :: n  = 8
    integer(kind=8), parameter :: m  = n-1
    integer(kind=8), parameter :: nn = 4*n
 ! b is G=(TU + UT) 
@@ -26,7 +26,7 @@ program poisson
    real(kind=8)    ::  diag(m)
    real(kind=8)    ::  pi, umax, h
    real(kind=4)    ::  tarray(2), t1, t2, dt
-   integer   ::  i,j,coloff
+   integer   ::  i,j,coloff,nt,tn
    integer   ::  ierror,comm,mpi_size,rank,r,mpi_m,rankp1
    integer   ::  astatus
       
@@ -58,21 +58,27 @@ program poisson
 
 !     full diag needed on all CPUs. Easiest to just calculate it on each
 !     CPU
+!$omp parallel do schedule(static)
    do i=1,m
       diag(i) = 2*(1-cos(i*pi/n))
    enddo
+!$omp end parallel do
 
 !  see equation 6, page 6            
+!$omp parallel do schedule(static) private(i)
    do j=1,m_per_p(rankp1)
       do i=1,m
          b(i,j) = h*h
       enddo
    enddo
+!$omp end parallel do
    
 !  do the first sine transforms, no communication needed
+!$omp parallel do schedule(static) private(z)
    do j=1,m_per_p(rankp1)
       call fst(b(1,j), n, z, nn)
    enddo 
+!$omp end parallel do
 
 
 !  transpose function must be rewritten
@@ -80,9 +86,11 @@ program poisson
 
 
 !  transform back
+!$omp parallel do schedule(static) private(z)
    do i=1,m_per_p(rankp1)
       call fstinv(bt(1,i), n, z, nn)
    enddo 
+!$omp end parallel do
 
 
 !  Divide by diag elements. All elements available on each node.
@@ -90,34 +98,30 @@ program poisson
    do i = 1,rank
       coloff = coloff + m_per_p(i)
    enddo
+!$omp parallel do schedule(static) private(i)
    do j=1,m_per_p(rankp1)
       do i=1,m
          bt(i,j) = bt(i,j)/(diag(i)+diag(j+coloff))
       enddo
    enddo
+!$omp end parallel do
 
 !  transform again
+!$omp parallel do schedule(static) private(z)
    do i=1,m_per_p(rankp1)
       call fst (bt(1,i), n, z, nn)
    enddo 
+!$omp end parallel do
 
-!   if (rank .eq. 0) then
-!   write(*,*) 'bt before second transpose'
-!   write(*,"(7F8.5)") bt
-!   write(*,*)
-!   endif
 !  transpose again
    call transp (b, bt, m, m_per_p,mpi_size,rank,ierror)
 
-!   if (rank .eq. 0) then
-!   write(*,*) 'b after second transpose'
-!   write(*,"(7F8.5)") b
-!   write(*,*)
-!   endif
 !  last back transform
+!$omp parallel do schedule(static) private(z)
    do j=1,m_per_p(rankp1)
       call fstinv (b(1,j), n, z, nn)
    enddo 
+!$omp end parallel do
 
 !  now, all cpu will print largest u
 !  some I/O required here
