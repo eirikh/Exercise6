@@ -134,9 +134,20 @@ program poisson
 
    write(6,*) ' ' 
    write(6,*) umax
+
+!   call mpi_barrier(world_comm,ierror)
+   do i=0,mpi_size
+      if(rank .eq. i) then 
+!         open(3,file='matrixprint',form='unformatted',access='stream')
+!         write(3) b
+         write(*,"(7F8.5)") b
+!         close(3)
+      endif
+      call mpi_barrier(world_comm,ierror)
+   enddo
    
    call write_matrix(b,m,m_per_p,mpi_size,rank,ierror)
-
+   
    call mpiendstuff(ierror)
    stop
 end
