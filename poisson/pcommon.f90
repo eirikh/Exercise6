@@ -130,9 +130,6 @@ do i = 1,rank
 enddo
 procsize = mp(rank+1)*m
 
-write(*,*) "offset", rank, offset, procsize
-write(*,*) "tot", totsize
-
 call mpi_file_open(world_comm,"matrix_output.dat",mpi_mode_wronly + mpi_mode_create,mpi_info_null,filehand,ierror)
 
 call mpi_file_set_size(filehand,totsize,ierror)

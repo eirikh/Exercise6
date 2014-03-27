@@ -5,6 +5,8 @@
 *.bbl
 *.swp
 */poisson
+*.dat
+*.eps
 */*.a
 */matrix_output
 */Makefile

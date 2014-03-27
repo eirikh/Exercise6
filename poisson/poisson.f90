@@ -14,7 +14,7 @@ program poisson
 !     ntnu, october 2000
 !
 !===================================================================
-   integer(kind=8), parameter :: n  = 8
+   integer(kind=8), parameter :: n  = 128
    integer(kind=8), parameter :: m  = n-1
    integer(kind=8), parameter :: nn = 4*n
 ! b is G=(TU + UT) 
@@ -136,15 +136,15 @@ program poisson
    write(6,*) umax
 
 !   call mpi_barrier(world_comm,ierror)
-   do i=0,mpi_size
-      if(rank .eq. i) then 
+!   do i=0,mpi_size
+!      if(rank .eq. i) then 
 !         open(3,file='matrixprint',form='unformatted',access='stream')
 !         write(3) b
-         write(*,"(7F8.5)") b
+!         write(*,"(7F8.5)") b
 !         close(3)
-      endif
-      call mpi_barrier(world_comm,ierror)
-   enddo
+!      endif
+!      call mpi_barrier(world_comm,ierror)
+!   enddo
    
    call write_matrix(b,m,m_per_p,mpi_size,rank,ierror)
    
